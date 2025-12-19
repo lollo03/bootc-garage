@@ -55,23 +55,25 @@ RUN curl -L "https://garagehq.deuxfleurs.fr/_releases/v$GARAGE_VERSION/x86_64-un
 RUN mkdir -p /var/lib/garage/meta /var/lib/garage/data
 
 # hadolint ignore=DL3059
-RUN printf 'metadata_dir = "/var/lib/garage/meta"\n\
-data_dir = "/var/lib/garage/data"\n\
-metadata_auto_snapshot_interval = "24h"\n\
-metadata_auto_snapshot_retention = 7\n\
-db_engine = "sqlite"\n\
-replication_factor = 1\n\
-rpc_bind_addr = "[::]:3901"\n\
-rpc_public_addr = "127.0.0.1:3901"\n\
-rpc_secret = "__RPC_SECRET__"\n\
-[s3_api]\n\
-s3_region = "garage"\n\
-api_bind_addr = "[::]:3900"\n\
-root_domain = ".s3.$HOSTNAME.lolloandr.com"\n\
-[admin]\n\
-api_bind_addr = "[::]:3903"\n\
-admin_token = "__ADMIN_TOKEN__"\n\
-metrics_token = "__METRICS_TOKEN__"\n\' "$HOSTNAME" > /etc/garage.toml
+RUN cat <<EOF > /etc/garage.toml
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+metadata_auto_snapshot_interval = "24h"
+metadata_auto_snapshot_retention = 7
+db_engine = "sqlite"
+replication_factor = 1
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+rpc_secret = "__RPC_SECRET__"
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.${HOSTNAME}.lolloandr.com"
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "__ADMIN_TOKEN__"
+metrics_token = "__METRICS_TOKEN__"
+EOF
 
 # hadolint ignore=DL3059
 RUN echo "EDITOR=vim" >> /etc/environment
