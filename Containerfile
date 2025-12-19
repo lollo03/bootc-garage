@@ -55,7 +55,7 @@ RUN curl -L "https://garagehq.deuxfleurs.fr/_releases/v$GARAGE_VERSION/x86_64-un
 RUN mkdir -p /var/lib/garage/meta /var/lib/garage/data
 
 # hadolint ignore=DL3059
-RUN printf 'metadata_dir = "/var/lib/garage/meta\n"\
+RUN printf 'metadata_dir = "/var/lib/garage/meta"\n\
 data_dir = "/var/lib/garage/data"\n\
 metadata_auto_snapshot_interval = "24h"\n\
 metadata_auto_snapshot_retention = 7\n\
@@ -73,6 +73,7 @@ api_bind_addr = "[::]:3903"\n\
 admin_token = "__ADMIN_TOKEN__"\n\
 metrics_token = "__METRICS_TOKEN__"\n\' "$HOSTNAME" > /etc/garage.toml
 
+# hadolint ignore=DL3059
 RUN echo "EDITOR=vim" >> /etc/environment
 # hadolint ignore=DL3059
 RUN usermod -s /usr/bin/fish root
