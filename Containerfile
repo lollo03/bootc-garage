@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:43
+FROM quay.io/fedora/fedora-bootc:41
 
 ARG GARAGE_VERSION=2.1.0
 ARG HOSTNAME=bohkup
@@ -17,6 +17,7 @@ RUN [ -z "$SSH_AUTHORIZED_KEYS" ] || echo "$SSH_AUTHORIZED_KEYS" > /usr/ssh/root
 
 # hadolint ignore=DL3041
 RUN dnf install -y "https://zfsonlinux.org/fedora/zfs-release.fc$(rpm -E %fedora).noarch.rpm" && \
+    #  Get the Image's Kernel Version (Not the Host's!)
     KERNEL_VERSION="$(rpm -q kernel --qf '%{VERSION}-%{RELEASE}.%{ARCH}')" && \
     dnf install -y \
         "kernel-devel-${KERNEL_VERSION}" \
@@ -24,7 +25,9 @@ RUN dnf install -y "https://zfsonlinux.org/fedora/zfs-release.fc$(rpm -E %fedora
         dkms \
         gcc \
         make && \
+    # Compile the Module (Explicitly)
     dkms autoinstall --verbose --kernelver "${KERNEL_VERSION}" && \
+    echo zfs > /etc/modules-load.d/zfs.conf && \
     systemctl enable zfs-import-cache zfs-import-scan zfs-mount zfs-share zfs-zed zfs.target && \
     dnf remove -y kernel-devel gcc make && \
     dnf clean all
