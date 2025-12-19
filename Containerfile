@@ -54,8 +54,17 @@ RUN curl -L "https://garagehq.deuxfleurs.fr/_releases/v$GARAGE_VERSION/x86_64-un
 
 RUN mkdir -p /var/lib/garage/meta /var/lib/garage/data
 
+# Set up garage service
+COPY ./config/garage.service /usr/local/lib/systemd/system/garage.service
+
 COPY config/garage.toml /etc/garage.toml
 RUN sed -i "s/HOSTNAME_PLACEHOLDER/$HOSTNAME/g" /etc/garage.toml
+
+# Install garage webui
+RUN curl -L https://github.com/khairul169/garage-webui/releases/download/1.1.0/garage-webui-v1.1.0-linux-amd64 -o garage-webui && \
+    chmod +x garage-webui && \
+    mv garage-webui /usr/local/bin
+
 
 # hadolint ignore=DL3059
 RUN echo "EDITOR=vim" >> /etc/environment

@@ -16,6 +16,7 @@ if grep -q "__RPC_SECRET__" "$GARAGE_CONFIG"; then
     
     echo "Secrets generated. Restarting Garage."
     systemctl enable --now garage
+    systemctl enable --now garage-webui
 else
     echo "Garage secrets already set."
 fi
