@@ -16,7 +16,7 @@ RUN [ -z "$SSH_AUTHORIZED_KEYS" ] || echo "$SSH_AUTHORIZED_KEYS" > /usr/ssh/root
 
 
 # hadolint ignore=DL3041
-RUN dnf install -y "https://zfsonlinux.org/fedora/zfs-release.fc$(rpm -E %fedora).noarch.rpm" && \
+RUN dnf install -y "https://zfsonlinux.org/fedora/zfs-release-3-0.fc$(rpm -E %fedora).noarch.rpm" && \
     #  Get the Image's Kernel Version (Not the Host's!)
     KERNEL_VERSION="$(rpm -q kernel --qf '%{VERSION}-%{RELEASE}.%{ARCH}')" && \
     dnf install -y \
