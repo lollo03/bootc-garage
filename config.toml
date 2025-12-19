@@ -1,0 +1,4 @@
+# User config (ADD THIS)
+[[customizations.user]]
+name = "root"
+password = "root"  # <--- Change this to your desired password
