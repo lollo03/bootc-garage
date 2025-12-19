@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:41
+FROM quay.io/fedora/fedora-bootc:43
 
 ARG GARAGE_VERSION=2.1.0
 ARG HOSTNAME=bohkup
