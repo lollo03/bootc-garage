@@ -65,6 +65,8 @@ RUN curl -L https://github.com/khairul169/garage-webui/releases/download/1.1.0/g
     chmod +x garage-webui && \
     mv garage-webui /usr/local/bin
 
+# Set up garage-webui service
+COPY ./config/garage-webui.service /usr/local/lib/systemd/system/garage-webui.service
 
 # hadolint ignore=DL3059
 RUN echo "EDITOR=vim" >> /etc/environment
