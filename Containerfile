@@ -30,7 +30,6 @@ RUN dnf install -y "https://zfsonlinux.org/fedora/zfs-release-3-0.fc$(rpm -E %fe
     echo zfs > /etc/modules-load.d/zfs.conf && \
     systemctl enable zfs-import-cache zfs-import-scan zfs-mount zfs-share zfs-zed zfs.target && \
     dnf remove -y kernel-devel gcc make && \
-    dnf clean all
 
 # --- Application Setup ---
 
