@@ -51,6 +51,7 @@ RUN curl -L "https://garagehq.deuxfleurs.fr/_releases/v$GARAGE_VERSION/x86_64-un
 
 RUN mkdir -p /var/lib/garage/meta /var/lib/garage/data
 
+# hadolint ignore=DL3059
 RUN cat <<EOF > /etc/garage.toml
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
@@ -70,6 +71,7 @@ EOF
 
 COPY ./config/garage.service /usr/local/lib/systemd/system/garage.service
 RUN echo "EDITOR=vim" >> /etc/environment
+# hadolint ignore=DL3059
 RUN usermod -s /usr/bin/fish root
 
 # Firstboot Scripts
